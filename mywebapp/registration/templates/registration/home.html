@@ -1,0 +1,63 @@
+{% extends 'registration/base.html' %}
+{% block title %}Home{% endblock title %}
+{% block main_content %}
+<section class="container">
+    <div class="row justify-content-around text-center text-white mt-5">
+        <div class="col-sm-8">
+            <h3>Mywebapp</h3>
+        </div>
+    </div>
+      <div class="row justify-content-around mt-3">
+      <div class="col-sm-8">
+          <a href="{% url 'add-user' %}" class='btn btn-primary float-end'>Add</a>
+      </div>
+      </div>  
+      <div class="row justify-content-around  text-white mt-1">
+          <div class="col-sm-8">
+              <table class="table table-bordered table-dark">
+                  <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">task_name</th>
+                        <th scope="col">description</th>
+                        <th scope="col">created_date</th>
+                        <th scope="col">finished_date</th>
+                        <th scope="col">description</th>
+                        <th scope="col">action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for use in userdata %}
+                      <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{use.task_name}}</td>
+                        <td>{{use.description}}</td>
+                        <td>{{use.created_date}}</td>
+                        <td>{{use.finished_date}}</td>
+                        <td>{{use.status}}</td>
+                        <td class="aline-inline">
+                          <table>
+                            <tr>
+                              <td>
+                                <form action="{% url 'delete-user' %}" 
+                                method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="id" value={{use.id}}>
+                                <input type="submit" value="Delete">
+                                </form>
+                              </td>
+                              <td>
+                              <a href="{% url 'edit-user' use.id%}" class="btn btn-sm btn-info">Edit</a>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                    </tbody>   
+              </table>
+          </div>
+      </div>
+</section>
+{% endblock main_content %}
+  
